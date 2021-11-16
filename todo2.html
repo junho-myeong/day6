@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+        <script src="todo2.js"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css">
+    </head>
+    <body>
+        <style>
+            .panel {
+                background-color: #31d2f2;
+                height: 50vh;
+                width: 100vw;
+            }
+            h1 {
+                font-size: 30px;
+                background-color: red;
+            }
+            .menuDiv {
+                position: fixed;
+                top: 0;
+                z-index: 100;
+            }
+        </style>
+        <div class="menuDiv">
+            <a href="#addPanel">ADD</a>
+            <a href="#listPanel">LIST</a>
+            <a href="#readPanel">READ</a>
+        </div>
+        <div class="panel" id="addPanel">
+            <h1>ADD</h1>
+            <!--제목/ 내용 / 완료여부(체크박스)/날짜-->
+            <div>
+                <label>제목</label>
+                <input type="text" name="title" size="50" value="새로운 할일">
+            </div>
+            <div>
+                <label>내용</label>
+<!--                긴 글자가 들어 올때는 input 말고 textarea 를 사용한다.-->
+                <textarea name="content" cols="50" rows="5">할일의 내용은 ?</textarea>
+            </div>
+            <div>
+                <label>날짜</label>
+                <input type="date" name="dueDate" size="50" value="2021-11-16">
+            </div>
+            <div>
+                <label>저장</label>
+                <button onclick="saveTodo()">save</button>
+            </div>
+        </div>
+        <div class="panel" id="listPanel">
+            <style>
+                table {
+                    border: 1px solid black;
+                    width: 90vw;
+                }
+                table  td:first-child {
+                    width: 10vw;
+                }
+                table  td:nth-child(2) {
+                    width: 10vw;
+                }
+                table  td:nth-child(3) {
+                    width: 60vw;
+                }
+                table  td:nth-child(4) {
+                    width: 10vw;
+                }
+            </style>
+            <h1>LIST</h1>
+            <table>
+                <thead>
+                    <td onclick="checkAll()">전체선택</td>
+                    <td>번호</td>
+                    <td>제목</td>
+                    <td>날짜</td>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="checkbox" name="complete"></td>
+                        <td>1</td>
+                        <td>AAAA</td>
+                        <td>2021-12-22</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="panel" id="readPanel">
+            <h1>READ</h1>
+        </div>
+
+        <script>
+            const todoService = outer()
+            // 기본적으로 사용하는 방법
+            // todoService.add({title:'js복습'})
+            // todoService.add({title:'java복습'})
+            // console.log(todoService.getAll())
+            function saveTodo() {
+                // 속성 즉 name 값으로 가져 오는 방법
+                const titleEl = document.querySelector("input[name='title']")
+                const contentEl = document.querySelector("textarea[name='content']")
+                const dueDateEl = document.querySelector("input[name='dueDate']")
+
+                console.log(titleEl, contentEl,dueDateEl)
+                const title = titleEl.value
+                const content = contentEl.value
+                const dueDate = dueDateEl.value
+                const complete = false
+
+                console.log(title,content,dueDate)
+
+                todoService.add({title,content,dueDate,complete})
+                console.log(todoService.getAll())
+
+                showList()
+            }
+            function showList() {
+                let todoArr = todoService.getAll()
+
+                let str =''
+                for (let i = 0; i < todoArr.length; i++) {
+                    // 아래의 것을 js 구조 분해 할당이라고한다.
+                    const {idx,title,dueDate,complete} = todoArr[i]
+                    console.log(idx,title,dueDate,complete)
+
+                    str += `<tr>
+                        <td><input type="checkbox" name="complete" ${complete ? 'checked' : ''}></td>
+                        <td>${idx}</td>
+                        <td>${title}<button onclick="deleteTodo(${idx})">DEL</button></td>
+                        <td>${dueDate}</td>
+                    </tr>`
+                }
+                document.querySelector("tbody").innerHTML = str
+                console.log(str)
+            }
+            function checkAll() {
+                todoService.changeAll()
+                showList()
+            }
+            function deleteTodo(indexNum) {
+                confirm("deleteTodo??")
+                todoService.removeTodo(indexNum)
+                showList()
+            }
+
+        //    새로 생긴 tr에서는 이벤트를 걸수가 없다
+        //    그래서 워래 있던 객체에 이벤트를 걸고 e.target 실제 이벤트 발생요소
+        //    or 각자 마다 onclick 을 거는거다
+
+        </script>
+    </body>
+</html>

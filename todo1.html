@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+    </head>
+    <body>
+        <script>
+            // 함수 f(x) => y
+            // 함수는 상태가 없다는 이야기이다. x가 정해지면 y 값이 정해지기 때문에
+            // 상태를 유지할 수 있는 방법이 필요
+
+            // 함수는 1급 객체라고 표현했다
+            // 변수의 모든 위치에 함수가 가능하다
+            // 함수는 만들어 줬으면 꼭 실행 시켜 줄것!!!!
+            const arr = []
+            // var 라는 변수는 호이스팅 되어서 전역으로 달라 붙는다 , i 라는 변수가 속한 공간을 사용한다는 뜻이다.
+            for (var i = 0; i < 10; i++) {
+                arr[i] = function () {console.log(i)}
+            }
+            // 클로저란 나의 스코프에 잇지않은 변수를 바깥쪽에서 저절로 메모리를 가져와서 사용하는것( 간단히 말하면 숨겨진 참조라고 한다!!!!!)
+            // 클로저는 바깥쪽 변수를 저절로 메모리로 사용하는것이기 때문에 함수도 사용할수잇다는것이다.
+            console.log(arr)
+            console.log(i)
+            // 아래 상황은 let 을 통해 계속 i를 만들어 가는것이다.() 여기 안에서 만
+            for (let i = 0; i < arr.length; i++) {
+                arr[i]()
+            }
+            // js에서는 함수를 단위로 변수의 scope를 잡는다 ,
+        </script>
+    </body>
+</html>

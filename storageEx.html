@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    const obj = {name : "hong gil dong" , age : 16 , address : "한양"}
+
+    // 객체를 문자열로 표현하는 방법  JSON.stringify
+    const jsonstr = JSON.stringify((obj))
+    console.log(jsonstr)
+    // localstorage 가 나온이유는 원래 로그인을 하기 위해 처음에 만들어 졌다.
+    localStorage.setItem('sample' , jsonstr)
+
+    const arr = [
+        {name : '샤프' , price : 3000},
+        {name : '볼펜' , price : 1500},
+    ]
+    // 이것은 배열인데 문자열로 바뀐 형태이다.
+    localStorage.setItem('products' , JSON.stringify(arr))
+    sessionStorage.setItem('test1','session storage 확인중')
+    console.log(JSON.stringify(arr))
+
+
+    const arrTest = [
+        {name : '명준호', age : 28},
+        {name : '명준호2' , age :29}
+    ]
+    console.log(arrTest)
+    arrTest[0].movie = 1
+    console.log(arrTest[0])
+
+
+</script>
+</body>
+</html>

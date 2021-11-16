@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<style>
+    div {
+        margin: 50px;
+        padding: 50px;
+    }
+    .d1 {
+        background-color: red;
+    }
+    .d2 {
+        background-color: yellow;
+    }
+    .d3 {
+        background-color: royalblue;
+    }
+</style>
+<div class="d1">
+    <div class="d2">
+        <div class="d3">
+            <button class="btn">click</button>
+        </div>
+    </div>
+</div>
+
+<script>
+<!--    아래의 상황을 이벤트의 전파라고 부른다(버블링 이라고 표현한다) btn-d3-d2-d1 -->
+    document.querySelector(".d1").addEventListener('click', function(e) {
+        alert("D1")
+    },false)
+    document.querySelector(".d2").addEventListener('click', function(e) {
+        alert("D2")
+    },false)
+    document.querySelector(".d3").addEventListener('click', function(e) {
+        alert("D3")
+    },false)
+    document.querySelector(".btn").addEventListener('click', function(e) {
+        // 버블링 더이상 버블링 되는것을 막겠다는 소리이다(이벤트 전파를 막는다)
+        e.stopPropagation()
+        // 기본동작을 막는다
+        e.preventDefault()
+        alert("btn")
+    },false)
+//위에 상황과 반대되는 상황을 이벤트 캡쳐링이라고 부른다
+// false 를사용하는 이유는 캡쳐링을 막기 위한것이다.
+// event는 기본적으로 객체이다.
+
+</script>
+</body>
+</html>
